@@ -1,10 +1,10 @@
 import './App.css'
-import Test from './components/Test'
+import AdminContainer from './components/admin/admin'
 
 function App() {
   return (
     <div className="App">
-      <Test />
+      <AdminContainer />
     </div>
   )
 }
