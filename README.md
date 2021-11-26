@@ -1,3 +1,4 @@
 ### Start the app
 
-Run `npm start`
+First install dependencies `npm install`
+Then Run `npm start`
