@@ -78,6 +78,8 @@ export const TestSection = ({
     variables: {},
   })
 
+  console.log('Data', data)
+
   return (
     <div style={{ paddingTop: 20, paddingBottom: 20 }}>
       <Typography variant="h4">What's On the Test ?</Typography>
