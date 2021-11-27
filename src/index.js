@@ -13,18 +13,18 @@ import { setContext } from '@apollo/client/link/context'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from './theme'
 
+const httpLink = new HttpLink({
+  uri: 'https://code-assessment-backend.herokuapp.com/',
+})
+
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('user-token')
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : null,
+      authorization: token ? `Bearer ${token}` : '',
     },
   }
-})
-
-const httpLink = new HttpLink({
-  uri: 'https://code-assessment-backend.herokuapp.com/',
 })
 
 const client = new ApolloClient({

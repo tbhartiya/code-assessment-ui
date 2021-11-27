@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import PageTitle from '../common/pageTitle'
 import { Menus } from './constant'
-import EnhancedTable from '../common/table'
+import ApplicantTable from './applicantTable'
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import SearchInput from '../common/search'
@@ -9,6 +9,7 @@ import FilterButtons from '../common/filterButtons'
 import { makeStyles } from '@mui/styles';
 import { GET_ALL_ASSESSMENTS } from './adminQueries'
 import { useQuery } from '@apollo/client'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     midAlign: {
@@ -16,6 +17,15 @@ const useStyles = makeStyles((theme) => ({
     },
     rightAlign: {
         textAlign: 'end'
+    },
+    colorPrimary: {
+        color: '#007FFF'
+    },
+    loader: {
+        justifyContent: 'center',
+        top: '50%',
+        position: 'absolute',
+        left: '50%'
     }
 }));
 const headCells = [
@@ -32,10 +42,10 @@ const headCells = [
         label: 'Test taken',
     },
     {
-        id: 'test_name',
+        id: 'status',
         numeric: true,
         disablePadding: false,
-        label: 'UI developer test',
+        label: 'Status',
     },
     {
         id: 'score',
@@ -43,38 +53,6 @@ const headCells = [
         disablePadding: false,
         label: 'Overall score',
     },
-    {
-        id: 'level',
-        numeric: true,
-        disablePadding: false,
-        label: 'Level',
-    },
-];
-
-function createData(name, calories, fat, carbs, protein) {
-    return {
-        name,
-        calories,
-        fat,
-        carbs,
-        protein,
-    };
-}
-
-const rows = [
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Donut', 452, 25.0, 51, 4.9),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Honeycomb', 408, 3.2, 87, 6.5),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Jelly Bean', 375, 0.0, 94, 0.0),
-    createData('KitKat', 518, 26.0, 65, 7.0),
-    createData('Lollipop', 392, 0.2, 98, 0.0),
-    createData('Marshmallow', 318, 0, 81, 2.0),
-    createData('Nougat', 360, 19.0, 9, 37.0),
-    createData('Oreo', 437, 18.0, 63, 4.0),
 ];
 
 const filters = [{ label: 'Overall Score' },
@@ -85,9 +63,19 @@ const filters = [{ label: 'Overall Score' },
 
 const Applicants = () => {
     const classes = useStyles();
-    const { data } = useQuery(GET_ALL_ASSESSMENTS);
+    const [assessments, setAssessments] = useState(null)
+    const { loading, data } = useQuery(GET_ALL_ASSESSMENTS);
 
-    console.log(data)
+    useEffect(() => {
+        if (data?.getAllAssessments?.length)
+            setAssessments(data.getAllAssessments)
+    }, [data])
+
+    if (loading) {
+        return (<Box sx={{ display: 'flex' }} className={classes.loader}>
+            <CircularProgress className={classes.colorPrimary} value={50} />
+        </Box>)
+    }
     return (
         <Box m={5}>
             <PageTitle
@@ -103,10 +91,8 @@ const Applicants = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} mt={5} >
-                    <EnhancedTable headCells={headCells} rows={rows} caption={'Candidate List'} />
+                    <ApplicantTable headCells={headCells} rows={assessments} caption={'Candidate List'} />
                 </Grid>
-                {/* <Grid item xs={12}>
-            </Grid> */}
             </Grid>
         </Box>
     );
