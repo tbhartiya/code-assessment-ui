@@ -6,6 +6,8 @@ import '../../App.css'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { Typography, Button } from '@mui/material'
 import { Section } from './Section'
+import { useQuery } from '@apollo/client'
+import { GET_TEST } from '../../queries'
 
 const skills = [
   {
@@ -62,10 +64,21 @@ const skills = [
   },
 ]
 
-export const TestSection = ({ showSections, onStartTest, showStartButton }) => {
+export const TestSection = ({
+  showSections,
+  onStartTest,
+  showStartButton,
+  completedSections,
+}) => {
   const [selected, setSelected] = React.useState(false)
 
   const chipText = `Est. test length 45 min`
+
+  const data = useQuery(GET_TEST, {
+    variables: {},
+  })
+
+  console.log('Data', data)
 
   return (
     <div style={{ paddingTop: 20, paddingBottom: 20 }}>
@@ -75,6 +88,7 @@ export const TestSection = ({ showSections, onStartTest, showStartButton }) => {
         skills={skills}
         onStartTest={onStartTest}
         showStartButton={showStartButton}
+        completedSections={completedSections}
       />
       {!!showSections && (
         <div>
@@ -90,7 +104,7 @@ export const TestSection = ({ showSections, onStartTest, showStartButton }) => {
               value="check"
               selected={selected}
               size="small"
-              color="primary"
+              color="secondary"
               onChange={() => {
                 setSelected(!selected)
               }}
@@ -104,6 +118,7 @@ export const TestSection = ({ showSections, onStartTest, showStartButton }) => {
           <Button
             onClick={() => showSections()}
             variant="outlined"
+            color="secondary"
             disabled={!selected}
           >
             Start Test
