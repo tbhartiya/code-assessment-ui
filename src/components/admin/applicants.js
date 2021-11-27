@@ -85,7 +85,7 @@ const filters = [{ label: 'Overall Score' },
 
 const Applicants = () => {
     const classes = useStyles();
-    const { loading, error, data } = useQuery(GET_ALL_ASSESSMENTS);
+    const { data } = useQuery(GET_ALL_ASSESSMENTS);
 
     console.log(data)
     return (
