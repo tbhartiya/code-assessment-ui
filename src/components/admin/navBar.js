@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
     active: {
         backgroundColor: '#bdbdbd',
     },
+    appBar: {
+        'root': {
+            background: '#ffffff'
+        }
+    }
 }));
 
 const NavBar = ({ menus, settings,
@@ -39,7 +44,7 @@ const NavBar = ({ menus, settings,
     const splitLocation = pathname.split("/");
     return (
         <>
-            <AppBar position="static">
+            <AppBar position="static" classes={classes.appBar}>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Typography

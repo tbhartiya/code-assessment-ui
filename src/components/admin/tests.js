@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { GET_ALL_TESTS } from './adminQueries'
 import { useQuery } from '@apollo/client'
 import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     cardWrapper: {
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
 const Tests = () => {
     const classes = useStyles();
     const [tests, setTests] = useState(null)
+    const navigate = useNavigate();
 
     const { loading, data } = useQuery(GET_ALL_TESTS);
 
@@ -81,7 +83,7 @@ const Tests = () => {
                 spacing={10}
             >
                 <Card className={classes.newCard + " " + classes.card}
-                    key={-1 + "-new test"}>
+                    key={-1 + "-new test"} onClick={() => navigate('/tests/new')}>
                     <div className={classes.centerAlign}>
                         <AddIcon fontSize={'large'} />
                         <Typography component="h5" variant="h5" className={classes.newTestText}>

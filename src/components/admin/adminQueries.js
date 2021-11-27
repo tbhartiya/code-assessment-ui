@@ -36,3 +36,15 @@ export const GET_ALL_TESTS = gql`
     }
   }
 `
+export const GET_ALL_SKILLS = gql`
+    query {
+        getAllSkills{
+         id
+            name
+            description
+            questions{
+             id
+            }
+        }
+    }
+`
