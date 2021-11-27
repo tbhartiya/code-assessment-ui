@@ -1,27 +1,25 @@
 import * as React from 'react';
-import NavBar from '../common/navBar'
+import NavBar from './navBar'
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import PeopleIcon from '@mui/icons-material/People';
-import Box from '@mui/material/Box';
 import Applicants from './applicants'
 import Tests from './tests'
 import { Menus } from './constant'
+import { Routes, Route } from "react-router-dom";
 
 const menus = [{
     icon: PeopleIcon,
     name: Menus.applicants.title,
+    path: '/'
 }, {
     icon: BorderColorIcon,
     name: Menus.tests.title,
+    path: '/tests'
 }];
 
 export default function AdminContainer({ user, onLogout }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const [selectedMenu, setSelectedMenu] = React.useState({
-        icon: PeopleIcon,
-        name: Menus.applicants.title,
-    });
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -31,7 +29,6 @@ export default function AdminContainer({ user, onLogout }) {
     };
 
     const handleCloseNavMenu = (selectedMenu) => {
-        setSelectedMenu(selectedMenu)
         setAnchorElNav(null);
     };
 
@@ -44,36 +41,32 @@ export default function AdminContainer({ user, onLogout }) {
         onLogout()
     }
 
-    const settings = [
-        { name: 'Profile', onClick: handleCloseUserMenu },
-        { name: 'Logout', onClick: logOut }];
+    const userName = JSON.parse(localStorage.getItem('user'))?.name;
 
-    const getSelectedComponents = (name) => {
-        switch (name) {
-            case 'Tests':
-                return <Tests />
-            default:
-                return <Applicants />
-        }
-    }
+    const settings = [
+        { name: userName, onClick: handleCloseUserMenu },
+        { name: 'Logout', onClick: logOut }];
 
     return (
         <>
-            <NavBar menus={menus}
-                settings={settings}
-                anchorElNav={anchorElNav}
-                anchorElUser={anchorElUser}
-                handleOpenNavMenu={handleOpenNavMenu}
-                handleOpenUserMenu={handleOpenUserMenu}
-                handleCloseNavMenu={handleCloseNavMenu}
-                handleCloseUserMenu={handleCloseUserMenu}
-                user={user}
-            />
-            <Box mt={2}>
-                {
-                    getSelectedComponents(selectedMenu.name)
-                }
-            </Box>
+            <Routes>
+                <Route path="/" element={
+                    <NavBar menus={menus}
+                        settings={settings}
+                        anchorElNav={anchorElNav}
+                        anchorElUser={anchorElUser}
+                        handleOpenNavMenu={handleOpenNavMenu}
+                        handleOpenUserMenu={handleOpenUserMenu}
+                        handleCloseNavMenu={handleCloseNavMenu}
+                        handleCloseUserMenu={handleCloseUserMenu}
+                        user={user}
+                    />}>
+                    <Route index element={<Applicants />} />
+                    <Route path="tests" element={<Tests />} />
+                    {/* <Route path="dashboard" element={<Dashboard />} /> */}
+                </Route>
+            </Routes>
+
         </>
     );
 }
