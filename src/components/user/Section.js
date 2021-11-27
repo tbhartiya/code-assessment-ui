@@ -54,6 +54,8 @@ export const Section = ({
     },
   })
 
+  console.log(result)
+
   const onSubmitTest = React.useCallback(() => {
     const localUSer = localStorage.getItem('user')
     submitAns({
@@ -70,7 +72,7 @@ export const Section = ({
     const pending = skills?.filter(
       (skill) => !completedSections?.find((cs) => cs === skill.id),
     )
-    if (!view && skills.length > 0 && pending == 0) {
+    if (!view && skills.length > 0 && pending === 0) {
       onSubmitTest()
     }
   }, [skills, view, completedSections, onSubmitTest])
