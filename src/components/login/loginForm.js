@@ -11,6 +11,7 @@ import {
 import { useMutation } from '@apollo/client'
 import { LOGIN, CREATE_USER } from '../../queries'
 import '../../App.css'
+import incedo from '../../incedo.png'
 
 const styles = {
   container: {
@@ -44,13 +45,12 @@ const LoginForm = ({ setError, setToken, setUser }) => {
   }, [result, createresult])
 
   useEffect(() => {
-    console.log('Here', result)
     if (result.data) {
-      const { email, name, token, role } = result.data.login
+      const { email, name, token, role, id } = result.data.login
       setUser({ email, name, role })
       setToken(token)
       localStorage.setItem('user-token', token)
-      const user = { email, name, role }
+      const user = { email, name, role, id }
       localStorage.setItem('user', JSON.stringify(user))
     }
   }, [result.data, createresult]) // eslint-disable-line
@@ -72,8 +72,6 @@ const LoginForm = ({ setError, setToken, setUser }) => {
     setIsSignUpComplete(false)
   }, [setIsSignUpComplete, setIsSignUp])
 
-  console.log('isSignUpComplete', isSignUpComplete)
-
   return (
     <div className="Login-container">
       <Backdrop
@@ -90,7 +88,10 @@ const LoginForm = ({ setError, setToken, setUser }) => {
         justifyContent="center"
       >
         <Grid item xs={12} className="Grid-item">
-          <p>Welcome to Incedo .Login to Proceed</p>
+          <img src={incedo} alt="Incedo" />
+          <Typography variant="h4">
+            Welcome to Incedo .Login to Proceed
+          </Typography>
         </Grid>
         <Grid item xs={6} mt={5}>
           {isSignUp ? (
