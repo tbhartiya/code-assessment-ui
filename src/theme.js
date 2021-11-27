@@ -7,7 +7,7 @@ export default createTheme({
       main: '#ffffff',
     },
     secondary: {
-      main: '#ff8e38',
+      main: '#d65a20',
     },
     error: {
       main: red.A400,

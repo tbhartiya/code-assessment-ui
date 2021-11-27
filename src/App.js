@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useApolloClient } from '@apollo/client'
 
-import UserTest from './components/Test'
+import { TestInstructions } from './components/common/TestInstructions'
 import LoginForm from './components/login/loginForm'
 import './App.css'
 import AdminContainer from './components/admin/admin'
@@ -16,15 +16,15 @@ const Notify = ({ errorMessage }) => {
 const defaultUser = {
   name: '',
   email: '',
-  role: ''
+  role: '',
 }
 
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(localStorage.getItem('user-token'))
   const localUSer = localStorage.getItem('user')
-  const storedUser = typeof localUSer === "object" ?
-    localUSer : JSON.parse(localUSer)
+  const storedUser =
+    typeof localUSer === 'object' ? localUSer : JSON.parse(localUSer)
   const [user, setUser] = useState(storedUser)
 
   const client = useApolloClient()
@@ -46,12 +46,16 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem('user') && localStorage.getItem('user-token')) {
       const localUSer = localStorage.getItem('user')
-      const storedUser = typeof localUSer === "object" ?
-        localUSer : JSON.parse(localUSer)
+      const storedUser =
+        typeof localUSer === 'object' ? localUSer : JSON.parse(localUSer)
       setUser(storedUser)
       setToken(localStorage.getItem('user-token'))
     }
   }, [])
+
+  const testIdFromURL = window.location.href.substr(
+    window.location.href.lastIndexOf('/') + 1,
+  )
 
   return (
     <div className="App">
@@ -61,7 +65,7 @@ const App = () => {
           <LoginForm setToken={setToken} setUser={setUser} setError={notify} />
         </div>
       ) : user.role === 'User' ? (
-        <UserTest onLogout={logout} />
+        <TestInstructions testIdFromURL={testIdFromURL} />
       ) : (
         <AdminContainer user={user} onLogout={logout} />
       )}

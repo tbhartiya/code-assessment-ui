@@ -145,8 +145,6 @@ export const TestScreen = ({ testData: data }) => {
 
   const [skills, setSkills] = React.useState([])
 
-  console.log('TESTTT', skills)
-
   React.useEffect(() => {
     const skillData = data?.getAllTests[0]?.skills
     setSkills(skillData)

@@ -54,7 +54,6 @@ export const Countdown = ({ minutes, onTimeUp }) => {
       onTimeUp()
     }
   }, [clockState, onTimeUp])
-  console.log('Calling')
   return (
     <div
       style={{ width: 200, position: 'absolute', right: 0, marginRight: 50 }}
