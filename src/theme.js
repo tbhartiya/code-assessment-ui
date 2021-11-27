@@ -15,5 +15,8 @@ export default createTheme({
         background: {
             default: '#000',
         },
+        default: {
+            main: '#000',
+        },
     },
 });

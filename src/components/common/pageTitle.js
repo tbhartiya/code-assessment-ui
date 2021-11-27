@@ -3,8 +3,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 export const PageTitle = ({ title, subtitle }) => (
-    <Grid container spacing={2}>
-        <Grid item xs={10} m={5}>
+    <Grid container>
+        <Grid item xs={10}>
             <div>
                 <Typography variant="h4" component="h4" align="left">
                     {title}

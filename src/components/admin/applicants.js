@@ -1,10 +1,21 @@
-// Add all the admin flow files in this folder
 import * as React from 'react';
 import PageTitle from '../common/pageTitle'
 import { Menus } from './constant'
 import EnhancedTable from '../common/table'
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import SearchInput from '../common/search'
+import FilterButtons from '../common/filterButtons'
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({
+    midAlign: {
+        alignItems: 'center',
+    },
+    rightAlign: {
+        textAlign: 'end'
+    }
+}));
 const headCells = [
     {
         id: 'name',
@@ -64,28 +75,35 @@ const rows = [
     createData('Oreo', 437, 18.0, 63, 4.0),
 ];
 
+const filters = [{ label: 'Overall Score' },
+{ label: 'Type' },
+{ label: 'Test Name' },
+{ label: 'Status' },
+{ label: 'Completion Date' }]
+
 const Applicants = () => {
+    const classes = useStyles();
     return (
-        <>
+        <Box m={5}>
             <PageTitle
                 title={Menus.applicants.title}
                 subtitle={Menus.applicants.subtitle} />
-            <Grid container spacing={2}>
-                <Grid container xs={10} m={5}>
-                    <Grid item xs={3}>
+            <Grid container mt={5}>
+                <Grid container className={classes.midAlign}>
+                    <Grid item xs={4} >
                         <SearchInput />
                     </Grid>
-                    <Grid item xs={7}>
-                        {/* <SearchInput /> */}
+                    <Grid item xs={8} className={classes.rightAlign}>
+                        <FilterButtons filterButtons={filters} />
                     </Grid>
                 </Grid>
-                <Grid item xs={10} m={5}>
+                <Grid item xs={12} mt={5} >
                     <EnhancedTable headCells={headCells} rows={rows} caption={'Candidate List'} />
                 </Grid>
                 {/* <Grid item xs={12}>
             </Grid> */}
             </Grid>
-        </>
+        </Box>
     );
 };
 export default Applicants;

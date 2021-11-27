@@ -63,7 +63,7 @@ function EnhancedTableHead(props) {
                     <TableCell
                         key={headCell.id}
                         align={'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
+                        padding={'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
@@ -86,19 +86,17 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-    numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
+    // rowCount: PropTypes.number.isRequired,
 };
 
 const EnhancedTableToolbar = ({ caption }) => {
     return (
         <Toolbar
             sx={{
-                pl: { sm: 2 },
+                pl: { xs: 2, sm: 2 },
                 pr: { xs: 1, sm: 1 },
             }}
         >
@@ -118,10 +116,6 @@ const EnhancedTableToolbar = ({ caption }) => {
             </Tooltip>
         </Toolbar>
     );
-};
-
-EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
 };
 
 export default function EnhancedTable({ headCells, rows, caption }) {
@@ -203,7 +197,7 @@ export default function EnhancedTable({ headCells, rows, caption }) {
                                                 component="th"
                                                 id={labelId}
                                                 scope="row"
-                                                padding="none"
+                                                padding="normal"
                                             >
                                                 {row.name}
                                             </TableCell>
@@ -220,7 +214,7 @@ export default function EnhancedTable({ headCells, rows, caption }) {
                                         height: 53 * emptyRows,
                                     }}
                                 >
-                                    <TableCell colSpan={6} />
+                                    <TableCell colSpan={5} />
                                 </TableRow>
                             )}
                         </TableBody>
@@ -236,6 +230,6 @@ export default function EnhancedTable({ headCells, rows, caption }) {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-        </Box>
+        </Box >
     );
 }
