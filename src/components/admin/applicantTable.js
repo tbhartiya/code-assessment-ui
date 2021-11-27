@@ -119,7 +119,6 @@ const EnhancedTableToolbar = ({ caption }) => {
 };
 
 export default function ApplicantTable({ headCells, rows, caption }) {
-    console.log(rows)
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('name');
     const [selected, setSelected] = React.useState([]);
@@ -193,7 +192,7 @@ export default function ApplicantTable({ headCells, rows, caption }) {
                                             hover
                                             onClick={(event) => handleClick(event, row.user?.name)}
                                             tabIndex={-1}
-                                            key={row.user?.name}
+                                            key={index + "-" + row.user?.name}
                                         >
                                             <TableCell
                                                 component="th"
@@ -224,7 +223,7 @@ export default function ApplicantTable({ headCells, rows, caption }) {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows?.length}
+                    count={rows?.length || 0}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

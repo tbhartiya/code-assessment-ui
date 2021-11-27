@@ -1,25 +1,24 @@
 import { gql } from '@apollo/client'
 
-
 export const GET_ALL_ASSESSMENTS = gql`
   query {
     getAllAssessments {
-        score
-        status
-        test{
-            id
-            name
-            skills{
-                name
-            }
-            testId
+      score
+      status
+      test {
+        id
+        name
+        skills {
+          name
         }
-        user{
-            id
-            name
-            email
-            role
-        }
+        testId
+      }
+      user {
+        id
+        name
+        email
+        role
+      }
     }
   }
 `
@@ -27,12 +26,13 @@ export const GET_ALL_ASSESSMENTS = gql`
 export const GET_ALL_TESTS = gql`
   query {
     getAllTests {
-            id
-            name
-            skills{
-                name
-            }
-            testId
+      id
+      name
+      skills {
+        name
+      }
+      testId
+      noOfApplicants
     }
   }
 `
