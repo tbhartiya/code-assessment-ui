@@ -18,14 +18,14 @@ const httpLink = new HttpLink({
 })
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('user-token');
+  const token = localStorage.getItem('user-token')
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    }
+      authorization: token ? `Bearer ${token}` : '',
+    },
   }
-});
+})
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
