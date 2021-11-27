@@ -142,6 +142,7 @@ export const TestScreen = ({ testData: data }) => {
   const [startSection, setStartSection] = React.useState('')
   const [completedSections, setCompletedSections] = React.useState([])
   const [sectionWiseAnswer, setSectionWiseAnswer] = React.useState([])
+  const [assessId, setAssessmentId] = React.useState('')
 
   const [skills, setSkills] = React.useState([])
 
@@ -192,6 +193,8 @@ export const TestScreen = ({ testData: data }) => {
           showStartButton={true}
           completedSections={completedSections}
           savedAnswers={sectionWiseAnswer}
+          assessId={assessId}
+          setAssessmentId={setAssessmentId}
         />
       )}
     </div>

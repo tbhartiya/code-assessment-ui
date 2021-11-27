@@ -12,6 +12,8 @@ export const TestSection = ({
   completedSections,
   savedAnswers,
   testData: data,
+  assessId,
+  setAssessmentId,
 }) => {
   const [selected, setSelected] = React.useState(false)
   const [skills, setSkills] = React.useState([])
@@ -39,6 +41,8 @@ export const TestSection = ({
         savedAnswers={savedAnswers}
         showSections={showSections}
         testData={testData}
+        assessId={assessId}
+        setAssessmentId={setAssessmentId}
       />
       {!!showSections && (
         <div>
