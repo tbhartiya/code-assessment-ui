@@ -89,9 +89,7 @@ const LoginForm = ({ setError, setToken, setUser }) => {
       >
         <Grid item xs={12} className="Grid-item">
           <img src={incedo} alt="Incedo" />
-          <Typography variant="h4">
-            Welcome to Incedo .Login to Proceed
-          </Typography>
+          <Typography variant="h4">Welcome to Incedo</Typography>
         </Grid>
         <Grid item xs={6} mt={5}>
           {isSignUp ? (
