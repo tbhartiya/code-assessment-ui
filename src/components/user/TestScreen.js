@@ -10,73 +10,27 @@ import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import { Countdown } from './CountDown'
 
-const skills = [
-  {
-    id: 'dummy',
-    name: 'React',
-    description: 'Questions on Hooks',
-    noOfQuestions: 3,
-    questions: [
-      {
-        id: 'Q1',
-        title: 'What is useState Hook',
-        type: 'MCQ',
-        options: ['A', 'B', 'C'],
-        correctOption: 'A',
-      },
-      {
-        id: 'Q2',
-        title: 'What is useEffect Hook',
-        type: 'MCQ',
-        options: ['A', 'B', 'C'],
-        correctOption: 'B',
-      },
-      {
-        id: 'Q3',
-        title: 'What is useCallback Hook',
-        type: 'MCQ',
-        options: ['A', 'B', 'C'],
-        correctOption: 'C',
-      },
-    ],
-  },
-  {
-    id: 'dummy2',
-    name: 'Javascript',
-    description:
-      'JavaScript is a scripting or programming language that allows you to implement complex features on web pages — every time a web page does more than just sit there and display static information for you to look at — displaying timely content updates, interactive maps, animated 2D/3D graphics, scrolling video jukeboxes, etc. — you can bet that JavaScript is probably involved. It is the third layer of the layer cake of standard web technologies, two of which (HTML and CSS) we have covered in much more detail in other parts of the Learning Area.',
-    noOfQuestions: 2,
-    questions: [
-      {
-        id: 'Q1',
-        title: 'What is new in ES6',
-        type: 'MCQ',
-        options: ['A', 'B', 'C'],
-        correctOption: 'A',
-      },
-      {
-        id: 'Q2',
-        title: 'What is Arrow Function',
-        type: 'coding',
-        options: ['A', 'B', 'C'],
-        correctOption: 'B',
-      },
-    ],
-  },
-]
-
 const Question = ({ displayQuestion, onOptionSelect, answered }) => {
   const { id, title, options, type } = displayQuestion
   const [value, setCodeValue] = React.useState('')
   const handleChange = (event) => {
-    console.log('event', event.target.value)
     onOptionSelect({ id, value: event.target.value })
   }
   return (
-    <div style={{ width: 700, display: 'flex' }}>
+    <div
+      style={{
+        width: 700,
+        display: 'flex',
+      }}
+    >
       <FormControl component="fieldset">
-        <FormLabel component="legend">{title}</FormLabel>
-        {type === 'coding' ? (
+        <FormLabel
+          color="default"
+          style={{ marginBottom: 20, alignSelf: 'flex-start' }}
+        >
+          {title?.trim()}
+        </FormLabel>
+        {type === 'Coding' ? (
           <TextField
             id="filled-multiline-flexible"
             multiline
@@ -112,7 +66,7 @@ const Question = ({ displayQuestion, onOptionSelect, answered }) => {
   )
 }
 
-const Test = ({ questions, time = 15, onEndSection, skillId }) => {
+const Test = ({ questions, onEndSection, skillId, saveSectionAnswers }) => {
   const [currentQuestion, setCurrentQuestion] = React.useState(0)
   const [answeredQuestions, setAnswered] = React.useState({})
   const onOptionSelect = React.useCallback(
@@ -125,15 +79,27 @@ const Test = ({ questions, time = 15, onEndSection, skillId }) => {
     },
     [setAnswered],
   )
+  const sectionTime = React.useMemo(() => {
+    let time = 0
+    questions.forEach((element) => {
+      if (element.type === 'Coding') {
+        time = time + 5
+      } else {
+        time++
+      }
+    })
+    return time
+  }, [questions])
   const endSection = () => {
     onEndSection(skillId)
+    saveSectionAnswers(answeredQuestions)
   }
   const savedAnswer = React.useMemo(() => {
     return answeredQuestions[questions[currentQuestion].id]
   }, [answeredQuestions, currentQuestion, questions])
   return (
     <div>
-      <Countdown minutes={10} />
+      <Countdown minutes={sectionTime} onTimeUp={endSection} />
       <div
         style={{
           display: 'flex',
@@ -172,11 +138,19 @@ const Test = ({ questions, time = 15, onEndSection, skillId }) => {
   )
 }
 
-export const TestScreen = () => {
+export const TestScreen = ({ testData: data }) => {
   const [startSection, setStartSection] = React.useState('')
   const [completedSections, setCompletedSections] = React.useState([])
+  const [sectionWiseAnswer, setSectionWiseAnswer] = React.useState([])
 
-  console.log(startSection)
+  const [skills, setSkills] = React.useState([])
+
+  console.log('TESTTT', skills)
+
+  React.useEffect(() => {
+    const skillData = data?.getAllTests[0]?.skills
+    setSkills(skillData)
+  }, [data, setSkills])
 
   const onEndSection = React.useCallback(
     (section) => {
@@ -188,7 +162,7 @@ export const TestScreen = () => {
 
   const section = React.useMemo(() => {
     return skills?.find((skill) => skill.id === startSection)?.questions
-  }, [startSection])
+  }, [startSection, skills])
 
   return (
     <div
@@ -202,13 +176,24 @@ export const TestScreen = () => {
           questions={section}
           onEndSection={onEndSection}
           skillId={startSection}
+          saveSectionAnswers={(answers) => {
+            const qArray = Object.keys(answers)
+            const arrayOfAnswers = qArray.map((q) => {
+              let obj = {}
+              obj['questionId'] = q
+              obj['answer'] = answers[q]
+              return obj
+            })
+            setSectionWiseAnswer((prev) => [...prev, ...arrayOfAnswers])
+          }}
         />
       ) : (
         <TestSection
-          skills={skills}
+          testData={data}
           onStartTest={setStartSection}
           showStartButton={true}
           completedSections={completedSections}
+          savedAnswers={sectionWiseAnswer}
         />
       )}
     </div>

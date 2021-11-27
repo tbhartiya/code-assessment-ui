@@ -7,6 +7,7 @@ export const LOGIN = gql`
       token
       email
       role
+      id
     }
   }
 `
@@ -46,6 +47,24 @@ export const GET_TEST = gql`
         description
       }
       testId
+    }
+  }
+`
+
+export const SUBMIT_ANSWERS = gql`
+  mutation createAssessment(
+    $status: Status!
+    $testId: ID!
+    $userId: ID!
+    $userInput: [UserInput!]
+  ) {
+    createAssessment(
+      status: $status
+      testId: $testId
+      userId: $userId
+      userInput: $userInput
+    ) {
+      status
     }
   }
 `
