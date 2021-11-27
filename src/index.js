@@ -3,19 +3,18 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { ThemeProvider } from '@mui/material/styles'
-import theme from './theme'
 import {
   ApolloClient,
   ApolloProvider,
   HttpLink,
   InMemoryCache,
-  gql,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+import { ThemeProvider } from '@mui/material/styles'
+import theme from './theme'
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('phonenumbers-user-token')
+  const token = localStorage.getItem('user-token')
   return {
     headers: {
       ...headers,
@@ -24,7 +23,9 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
-const httpLink = new HttpLink({ uri: 'https://code-assessment-backend.herokuapp.com/' })
+const httpLink = new HttpLink({
+  uri: 'https://code-assessment-backend.herokuapp.com/',
+})
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -33,11 +34,11 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
         <App />
-      </ApolloProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 )
