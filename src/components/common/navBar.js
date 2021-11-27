@@ -22,6 +22,8 @@ const NavBar = ({ menus, settings,
     handleOpenUserMenu,
     handleCloseNavMenu,
     handleCloseUserMenu,
+    user,
+    logout
 }) => {
     return (
         <AppBar position="static">
@@ -98,7 +100,7 @@ const NavBar = ({ menus, settings,
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Yoginee" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt={user.name} src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -118,9 +120,10 @@ const NavBar = ({ menus, settings,
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting}
-                                    onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                <MenuItem key={setting.name}
+                                    onClick={setting.onClick}
+                                >
+                                    <Typography textAlign="center">{setting.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

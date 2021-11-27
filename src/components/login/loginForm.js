@@ -20,7 +20,7 @@ const styles = {
   },
 }
 
-const LoginForm = ({ setError, setToken, setRole }) => {
+const LoginForm = ({ setError, setToken, setUser }) => {
   const [email, setemail] = useState('')
   const [name, setName] = useState('')
   const [isSignUp, setIsSignUp] = useState(true)
@@ -46,11 +46,11 @@ const LoginForm = ({ setError, setToken, setRole }) => {
   useEffect(() => {
     console.log('Here', result)
     if (result.data) {
-      const { token, role } = result.data.login
-      setRole(role)
+      const { email, name, token, role } = result.data.login
+      setUser({ email, name, role })
       setToken(token)
       localStorage.setItem('user-token', token)
-      localStorage.setItem('user-role', role)
+      localStorage.setItem('user', { email, name, role })
     }
   }, [result.data, createresult]) // eslint-disable-line
 

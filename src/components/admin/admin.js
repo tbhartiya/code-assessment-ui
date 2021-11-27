@@ -14,9 +14,8 @@ const menus = [{
     icon: BorderColorIcon,
     name: Menus.tests.title,
 }];
-const settings = ['Profile', 'Logout'];
 
-export default function AdminContainer() {
+export default function AdminContainer({ user, onLogout }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [selectedMenu, setSelectedMenu] = React.useState({
@@ -40,6 +39,15 @@ export default function AdminContainer() {
         setAnchorElUser(null);
     };
 
+    const logOut = () => {
+        handleCloseUserMenu();
+        onLogout()
+    }
+
+    const settings = [
+        { name: 'Profile', onClick: handleCloseUserMenu },
+        { name: 'Logout', onClick: logOut }];
+
     const getSelectedComponents = (name) => {
         switch (name) {
             case 'Tests':
@@ -59,6 +67,7 @@ export default function AdminContainer() {
                 handleOpenUserMenu={handleOpenUserMenu}
                 handleCloseNavMenu={handleCloseNavMenu}
                 handleCloseUserMenu={handleCloseUserMenu}
+                user={user}
             />
             <Box mt={2}>
                 {
