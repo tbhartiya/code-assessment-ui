@@ -81,9 +81,13 @@ const LoginForm = ({ setError, setToken, setUser }) => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Grid container spacing={2} direction="column"
+      <Grid
+        container
+        spacing={2}
+        direction="column"
         alignItems="center"
-        justifyContent="center">
+        justifyContent="center"
+      >
         <Grid item xs={12} className="Grid-item">
           <p>Welcome to Incedo .Login to Proceed</p>
         </Grid>
@@ -94,7 +98,10 @@ const LoginForm = ({ setError, setToken, setUser }) => {
                 <Alert severity="success">
                   Successfully Created a new Account!
                 </Alert>
-                <Button onClick={switchLoginView}> Login </Button>
+                <Button onClick={switchLoginView} color="secondary">
+                  {' '}
+                  Login{' '}
+                </Button>
               </div>
             ) : (
               <div style={styles.container}>
@@ -105,7 +112,8 @@ const LoginForm = ({ setError, setToken, setUser }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   margin="normal"
-                  variant="filled"
+                  variant="outlined"
+                  color="secondary"
                 />
                 <TextField
                   id="email"
@@ -114,7 +122,8 @@ const LoginForm = ({ setError, setToken, setUser }) => {
                   type="email"
                   onChange={(e) => setemail(e.target.value)}
                   margin="normal"
-                  variant="filled"
+                  variant="outlined"
+                  color="secondary"
                 />
                 <TextField
                   id="password"
@@ -123,10 +132,11 @@ const LoginForm = ({ setError, setToken, setUser }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   margin="normal"
-                  variant="filled"
+                  variant="outlined"
+                  color="secondary"
                 />
                 <Button
-                  variant="primary"
+                  color="secondary"
                   onClick={createNewUser}
                   style={{ width: 100, marginTop: 10 }}
                 >
@@ -143,7 +153,10 @@ const LoginForm = ({ setError, setToken, setUser }) => {
                     {' '}
                     Already have an Account ?{' '}
                   </Typography>
-                  <Button variant="primary" onClick={switchLoginView}> Login </Button>
+                  <Button color="secondary" onClick={switchLoginView}>
+                    {' '}
+                    Login{' '}
+                  </Button>
                 </div>
               </div>
             )
@@ -157,19 +170,21 @@ const LoginForm = ({ setError, setToken, setUser }) => {
                 type="email"
                 onChange={(e) => setemail(e.target.value)}
                 margin="normal"
-                variant="filled"
+                variant="outlined"
+                color="secondary"
               />
               <TextField
                 id="password"
-                variant="filled"
+                variant="outlined"
                 label="Password"
                 value={password}
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 margin="normal"
+                color="secondary"
               />
               <Button
-                variant="primary"
+                color="secondary"
                 onClick={loginNow}
                 style={{ width: 100, marginTop: 10 }}
               >
@@ -179,7 +194,10 @@ const LoginForm = ({ setError, setToken, setUser }) => {
                 style={{ display: 'flex', flexDirection: 'row', marginTop: 40 }}
               >
                 <Typography variant="h6"> Don't have an Account ? </Typography>
-                <Button variant="primary" onClick={switchLoginView}> Sign Up </Button>
+                <Button color="secondary" onClick={switchLoginView}>
+                  {' '}
+                  Sign Up{' '}
+                </Button>
               </div>
             </div>
           )}

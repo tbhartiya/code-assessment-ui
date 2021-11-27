@@ -86,19 +86,21 @@ const Question = ({ displayQuestion, onOptionSelect, answered }) => {
             onBlur={handleChange}
             onChange={(e) => setCodeValue(e.target.value)}
             variant="outlined"
+            color="secondary"
           />
         ) : (
           <RadioGroup
             aria-label="gender"
             name={`controlled-radio-buttons-group-${id}`}
             value={answered}
+            color="secondary"
             onChange={handleChange}
           >
             {' '}
             {options.map((op) => (
               <FormControlLabel
                 value={op}
-                control={<Radio />}
+                control={<Radio color="secondary" />}
                 label={op}
                 key={`${id}-${op}`}
               />
@@ -143,6 +145,8 @@ const Test = ({ questions, time = 15, onEndSection, skillId }) => {
       >
         <Button
           disabled={currentQuestion === 0}
+          variant="outlined"
+          color="secondary"
           onClick={() => setCurrentQuestion((prev) => prev - 1)}
         >
           Back
@@ -155,11 +159,13 @@ const Test = ({ questions, time = 15, onEndSection, skillId }) => {
         <Button
           onClick={() => setCurrentQuestion((prev) => prev + 1)}
           disabled={currentQuestion === questions.length - 1}
+          color="secondary"
+          variant="outlined"
         >
           Next
         </Button>
       </div>
-      <Button onClick={endSection} variant="outlined">
+      <Button onClick={endSection} variant="outlined" color="secondary">
         End Section
       </Button>
     </div>

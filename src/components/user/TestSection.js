@@ -102,7 +102,7 @@ export const TestSection = ({
               value="check"
               selected={selected}
               size="small"
-              color="primary"
+              color="secondary"
               onChange={() => {
                 setSelected(!selected)
               }}
@@ -116,6 +116,7 @@ export const TestSection = ({
           <Button
             onClick={() => showSections()}
             variant="outlined"
+            color="secondary"
             disabled={!selected}
           >
             Start Test

@@ -57,7 +57,7 @@ export const Section = ({
                 completedSections?.find((section) => section === skill.id)
                   ? 'success'
                   : skill.id === view
-                  ? 'primary'
+                  ? 'secondary'
                   : 'standard'
               }
             >
@@ -144,7 +144,9 @@ export const Section = ({
           {skills.find((skill) => skill.id === view).description}
         </Typography>
         {showStartButton && (
-          <Button onClick={() => onStartTest(view)}>Start Section</Button>
+          <Button onClick={() => onStartTest(view)} color="secondary">
+            Start Section
+          </Button>
         )}
       </div>
     </div>
