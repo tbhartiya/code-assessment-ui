@@ -7,6 +7,8 @@ import Box from '@mui/material/Box';
 import SearchInput from '../common/search'
 import FilterButtons from '../common/filterButtons'
 import { makeStyles } from '@mui/styles';
+import { GET_ALL_ASSESSMENTS } from './adminQueries'
+import { useQuery } from '@apollo/client'
 
 const useStyles = makeStyles((theme) => ({
     midAlign: {
@@ -83,6 +85,9 @@ const filters = [{ label: 'Overall Score' },
 
 const Applicants = () => {
     const classes = useStyles();
+    const { loading, error, data } = useQuery(GET_ALL_ASSESSMENTS);
+
+    console.log(data)
     return (
         <Box m={5}>
             <PageTitle
