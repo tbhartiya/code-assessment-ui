@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         textOverflow: 'ellipsis'
     },
     newCard: {
-        backgroundColor: 'rgba(102, 178, 255, 0.15)',
+        backgroundColor: 'rgba(102, 178, 255, 0.15) !important',
         border: '1px dashed #0072E5'
     },
     centerAlign: {
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
     },
     newTestText: {
-        marginTop: '-90px'
+        marginTop: '-90px !important'
     }
 }));
 
@@ -80,8 +80,8 @@ const Tests = () => {
                 className={classes.cardWrapper}
                 spacing={10}
             >
-                <Card className={classes.card + " " + classes.newCard}
-                    key={-1}>
+                <Card className={classes.newCard + " " + classes.card}
+                    key={-1 + "-new test"}>
                     <div className={classes.centerAlign}>
                         <AddIcon fontSize={'large'} />
                         <Typography component="h5" variant="h5" className={classes.newTestText}>
@@ -90,7 +90,7 @@ const Tests = () => {
                     </div>
                 </Card>
                 {tests?.map((test, index) => (
-                    <Card className={classes.card} key={index}>
+                    <Card className={classes.card} key={index + "-" + test.name}>
                         <Box>
                             <Typography component="div" variant="h5">
                                 {test.name}
@@ -114,7 +114,7 @@ const Tests = () => {
                                 </div>
                                 <div className={classes.info}>
                                     {test?.skills?.map((skill) => (
-                                        <Typography variant="h6" color="text.secondary" component="div">
+                                        <Typography variant="h6" color="text.secondary" component="div" key={skill.name}>
                                             {skill.name}
                                         </Typography>
                                     ))}

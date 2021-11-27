@@ -12,6 +12,7 @@ import {
 import { setContext } from '@apollo/client/link/context'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from './theme'
+import { BrowserRouter } from "react-router-dom";
 
 const httpLink = new HttpLink({
   uri: 'https://code-assessment-backend.herokuapp.com/',
@@ -36,7 +37,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </ThemeProvider>
     </ApolloProvider>
   </React.StrictMode>,
