@@ -4,6 +4,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import PeopleIcon from '@mui/icons-material/People';
 import Applicants from './applicants'
 import Tests from './tests'
+import CreateNewTest from './createNewTest'
 import { Menus } from './constant'
 import { Routes, Route } from "react-router-dom";
 
@@ -63,6 +64,7 @@ export default function AdminContainer({ user, onLogout }) {
                     />}>
                     <Route index element={<Applicants />} />
                     <Route path="tests" element={<Tests />} />
+                    <Route path="tests/new" element={<CreateNewTest />} />
                     {/* <Route path="dashboard" element={<Dashboard />} /> */}
                 </Route>
             </Routes>

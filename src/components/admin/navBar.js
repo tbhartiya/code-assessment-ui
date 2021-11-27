@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
     active: {
         backgroundColor: '#bdbdbd',
     },
+    appBar: {
+        'root': {
+            background: '#ffffff'
+        }
+    }
 }));
 
 const NavBar = ({ menus, settings,

@@ -16,38 +16,16 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import { makeStyles } from '@mui/styles';
 
-// function descendingComparator(a, b, orderBy) {
-//     if (b[orderBy] < a[orderBy]) {
-//         return -1;
-//     }
-//     if (b[orderBy] > a[orderBy]) {
-//         return 1;
-//     }
-//     return 0;
-// }
-
-// function getComparator(order, orderBy) {
-//     return order === 'desc'
-//         ? (a, b) => descendingComparator(a, b, orderBy)
-//         : (a, b) => -descendingComparator(a, b, orderBy);
-// }
-
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
-// function stableSort(array, comparator) {
-//     const stabilizedThis = array.map((el, index) => [el, index]);
-//     stabilizedThis.sort((a, b) => {
-//         const order = comparator(a[0], b[0]);
-//         if (order !== 0) {
-//             return order;
-//         }
-//         return a[1] - b[1];
-//     });
-//     return stabilizedThis.map((el) => el[0]);
-// }
-
-
+const useStyles = makeStyles((theme) => ({
+    noDataText: {
+        display: 'block',
+        width: '100%',
+        position: 'absolute',
+        fontSize: '15px !important'
+    },
+}));
 
 function EnhancedTableHead(props) {
     const { order, orderBy, onRequestSort, headCells } =
@@ -89,7 +67,6 @@ EnhancedTableHead.propTypes = {
     onRequestSort: PropTypes.func.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
-    // rowCount: PropTypes.number.isRequired,
 };
 
 const EnhancedTableToolbar = ({ caption }) => {
@@ -119,6 +96,7 @@ const EnhancedTableToolbar = ({ caption }) => {
 };
 
 export default function ApplicantTable({ headCells, rows, caption }) {
+    const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('name');
     const [selected, setSelected] = React.useState([]);
@@ -183,8 +161,6 @@ export default function ApplicantTable({ headCells, rows, caption }) {
                         />
                         <TableBody>
                             {
-                                // stableSort(rows, getComparator(order, orderBy))
-                                //     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 rows?.map((row, index) => {
                                     const labelId = `enhanced-table-${index}`;
                                     return (
@@ -209,13 +185,15 @@ export default function ApplicantTable({ headCells, rows, caption }) {
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow
-                                    style={{
-                                        height: 53 * emptyRows,
-                                    }}
+                                <Typography
+                                    variant="h6"
+                                    id="noData"
+                                    component="h6"
+                                    textAlign={'center'}
+                                    className={classes.noDataText}
                                 >
-                                    <TableCell colSpan={5} />
-                                </TableRow>
+                                    No Data to Display
+                                </Typography>
                             )}
                         </TableBody>
                     </Table>
