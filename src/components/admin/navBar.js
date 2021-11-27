@@ -44,7 +44,7 @@ const NavBar = ({ menus, settings,
     const splitLocation = pathname.split("/");
     return (
         <>
-            <AppBar position="static" classes={classes.appBar}>
+            <AppBar position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Typography

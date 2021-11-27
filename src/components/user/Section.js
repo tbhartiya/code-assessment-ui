@@ -9,7 +9,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import Chip from '@mui/material/Chip'
 import '../../App.css'
 import { Typography, Button } from '@mui/material'
-import { SUBMIT_ANSWERS } from '../../queries'
+import { SUBMIT_ANSWERS, START_ASSESSMENT } from '../../queries'
 
 export const Section = ({
   skills,
@@ -19,6 +19,8 @@ export const Section = ({
   savedAnswers,
   showSections,
   testData,
+  assessId,
+  setAssessmentId,
 }) => {
   const getSelectedSection = React.useCallback(() => {
     const pending = skills?.filter(
@@ -30,6 +32,7 @@ export const Section = ({
   }, [skills, completedSections])
   const [view, setView] = React.useState(getSelectedSection())
 
+  console.log('Access', assessId)
   const totalTestTime = React.useMemo(() => {
     let testTime = 0
     skills?.forEach((skill) => {
@@ -54,36 +57,42 @@ export const Section = ({
     },
   })
 
+  const [startAssessment, assessmentResult] = useMutation(START_ASSESSMENT, {
+    onError: (error) => {
+      console.log('error', error)
+    },
+  })
+  console.log(assessmentResult)
+
   console.log(result)
 
   const onSubmitTest = React.useCallback(() => {
-    const localUSer = localStorage.getItem('user')
     submitAns({
       variables: {
-        userId: JSON.parse(localUSer).id,
-        testId: testData.id,
+        id: assessId,
         status: 'Completed',
         userInput: savedAnswers,
       },
     })
-  }, [savedAnswers, submitAns, testData.id])
+  }, [savedAnswers, submitAns, assessId])
 
   const setStatusInProgress = React.useCallback(() => {
     const localUSer = localStorage.getItem('user')
-    submitAns({
+    startAssessment({
       variables: {
         userId: JSON.parse(localUSer).id,
         testId: testData.id,
         status: 'Started',
       },
+    }).then((e) => {
+      setAssessmentId(e?.data?.createAssessment?.id)
     })
-  }, [submitAns, testData.id])
-
+  }, [startAssessment, testData.id, setAssessmentId])
   React.useEffect(() => {
     const pending = skills?.filter(
       (skill) => !completedSections?.find((cs) => cs === skill.id),
     )
-    if (!view && skills?.length > 0 && pending === 0) {
+    if (!view && skills?.length > 0 && pending.length === 0) {
       onSubmitTest()
     }
   }, [skills, view, completedSections, onSubmitTest])

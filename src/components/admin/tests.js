@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
+import React, { useState, useEffect } from 'react'
+import Box from '@mui/material/Box'
 import PageTitle from '../common/pageTitle'
 import { Menus } from './constant'
-import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
-import AddIcon from '@mui/icons-material/Add';
+import Card from '@mui/material/Card'
+import Typography from '@mui/material/Typography'
+import { makeStyles } from '@mui/styles'
+import AddIcon from '@mui/icons-material/Add'
 import { GET_ALL_TESTS } from './adminQueries'
 import { useQuery } from '@apollo/client'
 import CircularProgress from '@mui/material/CircularProgress';
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         width: '30%',
         marginRight: '15px',
         marginBottom: '25px',
-        height: '200px'
+        height: '200px',
     },
     infoWrapper: {
         display: 'flex',
@@ -38,11 +38,11 @@ const useStyles = makeStyles((theme) => ({
         marginRight: '10px',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
-        textOverflow: 'ellipsis'
+        textOverflow: 'ellipsis',
     },
     newCard: {
         backgroundColor: 'rgba(102, 178, 255, 0.15) !important',
-        border: '1px dashed #0072E5'
+        border: '1px dashed #0072E5',
     },
     centerAlign: {
         lineHeight: '200px',
@@ -51,20 +51,25 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
     },
     newTestText: {
-        marginTop: '-90px !important'
+        marginTop: '-90px !important',
+    },
+    loader: {
+        justifyContent: 'center',
+        top: '50%',
+        position: 'absolute',
+        left: '50%'
     }
-}));
+}))
 
 const Tests = () => {
     const classes = useStyles();
     const [tests, setTests] = useState(null)
     const navigate = useNavigate();
 
-    const { loading, data } = useQuery(GET_ALL_TESTS);
+    const { loading, data } = useQuery(GET_ALL_TESTS)
 
     useEffect(() => {
-        if (data?.getAllTests?.length)
-            setTests(data.getAllTests)
+        if (data?.getAllTests?.length) setTests(data.getAllTests)
     }, [data])
 
     if (loading) {
@@ -72,7 +77,6 @@ const Tests = () => {
             <CircularProgress className={classes.colorPrimary} value={50} />
         </Box>)
     }
-
     return (
         <Box m={5}>
             <PageTitle
@@ -100,7 +104,7 @@ const Tests = () => {
                             <div className={classes.infoWrapper}>
                                 <div className={classes.info}>
                                     <Typography variant="h6" color="text.secondary" component="div">
-                                        {test?.applicants || 0}
+                                        {test?.noOfApplicants || 0}
                                     </Typography>
                                     <Typography variant="subtitle2" color="text.secondary" component="div">
                                         applicants
@@ -131,6 +135,6 @@ const Tests = () => {
             </Box>
         </Box >
     );
-};
-export default Tests;
+}
 
+export default Tests;

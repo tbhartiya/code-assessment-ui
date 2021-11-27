@@ -51,19 +51,22 @@ export const GET_TEST = gql`
   }
 `
 
+export const START_ASSESSMENT = gql`
+  mutation createAssessment($status: Status!, $testId: ID!, $userId: ID!) {
+    createAssessment(status: $status, testId: $testId, userId: $userId) {
+      status
+      id
+    }
+  }
+`
+
 export const SUBMIT_ANSWERS = gql`
-  mutation createAssessment(
+  mutation editAssessment(
     $status: Status!
-    $testId: ID!
-    $userId: ID!
+    $id: ID!
     $userInput: [UserInput!]
   ) {
-    createAssessment(
-      status: $status
-      testId: $testId
-      userId: $userId
-      userInput: $userInput
-    ) {
+    editAssessment(status: $status, id: $id, userInput: $userInput) {
       status
     }
   }
