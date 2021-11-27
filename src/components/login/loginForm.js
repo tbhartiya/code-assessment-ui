@@ -50,7 +50,8 @@ const LoginForm = ({ setError, setToken, setUser }) => {
       setUser({ email, name, role })
       setToken(token)
       localStorage.setItem('user-token', token)
-      localStorage.setItem('user', { email, name, role })
+      const user = { email, name, role }
+      localStorage.setItem('user', JSON.stringify(user))
     }
   }, [result.data, createresult]) // eslint-disable-line
 

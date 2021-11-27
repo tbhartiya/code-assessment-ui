@@ -22,7 +22,10 @@ const defaultUser = {
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(localStorage.getItem('user-token'))
-  const [user, setUser] = useState(defaultUser)
+  const localUSer = localStorage.getItem('user')
+  const storedUser = typeof localUSer === "object" ?
+    localUSer : JSON.parse(localUSer)
+  const [user, setUser] = useState(storedUser)
 
   const client = useApolloClient()
 
@@ -42,7 +45,10 @@ const App = () => {
 
   useEffect(() => {
     if (localStorage.getItem('user') && localStorage.getItem('user-token')) {
-      setUser(localStorage.getItem('user'))
+      const localUSer = localStorage.getItem('user')
+      const storedUser = typeof localUSer === "object" ?
+        localUSer : JSON.parse(localUSer)
+      setUser(storedUser)
       setToken(localStorage.getItem('user-token'))
     }
   }, [])

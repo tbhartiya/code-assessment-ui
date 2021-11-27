@@ -6,20 +6,6 @@ export const GET_ALL_ASSESSMENTS = gql`
     getAllAssessments {
         score
         status
-        test{
-            id
-            name
-            skills{
-                name
-            }
-            testId
-        }
-        user{
-            id
-            name
-            email
-            role
-        }
     }
   }
 `
