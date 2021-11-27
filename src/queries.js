@@ -28,3 +28,24 @@ export const ME = gql`
     }
   }
 `
+
+export const GET_TEST = gql`
+  query GetTests($testId: String) {
+    getAllTests(testId: $testId) {
+      id
+      name
+      skills {
+        id
+        questions {
+          type
+          id
+          title
+          options
+        }
+        name
+        description
+      }
+      testId
+    }
+  }
+`

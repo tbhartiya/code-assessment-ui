@@ -9,7 +9,7 @@ import { Typography, Divider } from '@mui/material'
 import { TestSection } from '../user/TestSection'
 import { TestScreen } from '../user/TestScreen'
 
-export const TestInstructions = () => {
+export const TestInstructions = ({ onEndSection }) => {
   const [showSections, setShowSections] = React.useState(false)
 
   return (
@@ -20,7 +20,7 @@ export const TestInstructions = () => {
       </div>
       <Divider />
       {showSections ? (
-        <TestScreen />
+        <TestScreen onEndSection={onEndSection} />
       ) : (
         <div>
           <div

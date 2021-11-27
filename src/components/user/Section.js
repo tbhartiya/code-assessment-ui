@@ -2,11 +2,25 @@ import * as React from 'react'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import DoneAllOutlined from '@mui/icons-material/DoneAllOutlined'
 import '../../App.css'
 import { Typography, Button } from '@mui/material'
 
-export const Section = ({ skills, showStartButton = false, onStartTest }) => {
-  const [view, setView] = React.useState('dummy')
+export const Section = ({
+  skills,
+  showStartButton = false,
+  onStartTest,
+  completedSections,
+}) => {
+  const getSelectedSection = () => {
+    const pending = skills.filter(
+      (skill) => !completedSections?.find((cs) => cs === skill.id),
+    )
+    if (pending.length > 0) {
+      return pending[0].id
+    } else return ''
+  }
+  const [view, setView] = React.useState(getSelectedSection())
 
   const handleChange = (event, nextView) => {
     setView(nextView)
@@ -35,7 +49,17 @@ export const Section = ({ skills, showStartButton = false, onStartTest }) => {
               value={skill.id}
               aria-label="list"
               className="Section-title"
-              color={skill.id === view ? 'primary' : 'standard'}
+              disabled={
+                skill.id === view ||
+                completedSections?.find((section) => section === skill.id)
+              }
+              color={
+                completedSections?.find((section) => section === skill.id)
+                  ? 'success'
+                  : skill.id === view
+                  ? 'primary'
+                  : 'standard'
+              }
             >
               <div
                 style={{
@@ -49,7 +73,11 @@ export const Section = ({ skills, showStartButton = false, onStartTest }) => {
               >
                 {' '}
                 <p>{skill.name}</p>
-                {view === skill.id ? <ChevronRightIcon /> : null}
+                {completedSections?.find((section) => section === skill.id) ? (
+                  <DoneAllOutlined />
+                ) : view === skill.id ? (
+                  <ChevronRightIcon />
+                ) : null}
               </div>
             </ToggleButton>
           ))}
@@ -70,7 +98,7 @@ export const Section = ({ skills, showStartButton = false, onStartTest }) => {
       >
         <div>
           <Typography variant="subtitle2">
-            {skills.find((skill) => skill.id === view).name} Overview
+            {skills?.find((skill) => skill.id === view).name} Overview
           </Typography>
         </div>
         <div
