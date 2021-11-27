@@ -17,35 +17,35 @@ import Tooltip from '@mui/material/Tooltip';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 
-function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
-    }
-    return 0;
-}
+// function descendingComparator(a, b, orderBy) {
+//     if (b[orderBy] < a[orderBy]) {
+//         return -1;
+//     }
+//     if (b[orderBy] > a[orderBy]) {
+//         return 1;
+//     }
+//     return 0;
+// }
 
-function getComparator(order, orderBy) {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
-}
+// function getComparator(order, orderBy) {
+//     return order === 'desc'
+//         ? (a, b) => descendingComparator(a, b, orderBy)
+//         : (a, b) => -descendingComparator(a, b, orderBy);
+// }
 
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
-function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-        const order = comparator(a[0], b[0]);
-        if (order !== 0) {
-            return order;
-        }
-        return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-}
+// function stableSort(array, comparator) {
+//     const stabilizedThis = array.map((el, index) => [el, index]);
+//     stabilizedThis.sort((a, b) => {
+//         const order = comparator(a[0], b[0]);
+//         if (order !== 0) {
+//             return order;
+//         }
+//         return a[1] - b[1];
+//     });
+//     return stabilizedThis.map((el) => el[0]);
+// }
 
 
 
@@ -118,7 +118,8 @@ const EnhancedTableToolbar = ({ caption }) => {
     );
 };
 
-export default function EnhancedTable({ headCells, rows, caption }) {
+export default function ApplicantTable({ headCells, rows, caption }) {
+    console.log(rows)
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('name');
     const [selected, setSelected] = React.useState([]);
@@ -182,16 +183,17 @@ export default function EnhancedTable({ headCells, rows, caption }) {
                             headCells={headCells}
                         />
                         <TableBody>
-                            {stableSort(rows, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
+                            {
+                                // stableSort(rows, getComparator(order, orderBy))
+                                //     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                rows?.map((row, index) => {
                                     const labelId = `enhanced-table-${index}`;
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
+                                            onClick={(event) => handleClick(event, row.user?.name)}
                                             tabIndex={-1}
-                                            key={row.name}
+                                            key={row.user?.name}
                                         >
                                             <TableCell
                                                 component="th"
@@ -199,12 +201,11 @@ export default function EnhancedTable({ headCells, rows, caption }) {
                                                 scope="row"
                                                 padding="normal"
                                             >
-                                                {row.name}
+                                                {row.user?.name}
                                             </TableCell>
-                                            <TableCell>{row.calories}</TableCell>
-                                            <TableCell>{row.fat}</TableCell>
-                                            <TableCell>{row.carbs}</TableCell>
-                                            <TableCell>{row.protein}</TableCell>
+                                            <TableCell>{row.test.name}</TableCell>
+                                            <TableCell>{row.status}</TableCell>
+                                            <TableCell>{row.score}</TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -223,7 +224,7 @@ export default function EnhancedTable({ headCells, rows, caption }) {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
+                    count={rows?.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
