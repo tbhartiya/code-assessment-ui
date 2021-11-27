@@ -18,7 +18,6 @@ export const TestSection = ({
 
   React.useEffect(() => {
     const skillData = data?.getAllTests[0]?.skills
-    console.log('skillData', data)
     setSkills(skillData)
   }, [data, setSkills])
 

@@ -32,7 +32,7 @@ export const Section = ({
 
   const totalTestTime = React.useMemo(() => {
     let testTime = 0
-    skills.forEach((skill) => {
+    skills?.forEach((skill) => {
       skill.questions.forEach((q) => {
         if (q.type === 'Coding') {
           testTime = testTime + 5
@@ -68,11 +68,22 @@ export const Section = ({
     })
   }, [savedAnswers, submitAns, testData.id])
 
+  const setStatusInProgress = React.useCallback(() => {
+    const localUSer = localStorage.getItem('user')
+    submitAns({
+      variables: {
+        userId: JSON.parse(localUSer).id,
+        testId: testData.id,
+        status: 'Started',
+      },
+    })
+  }, [submitAns, testData.id])
+
   React.useEffect(() => {
     const pending = skills?.filter(
       (skill) => !completedSections?.find((cs) => cs === skill.id),
     )
-    if (!view && skills.length > 0 && pending === 0) {
+    if (!view && skills?.length > 0 && pending === 0) {
       onSubmitTest()
     }
   }, [skills, view, completedSections, onSubmitTest])
@@ -211,7 +222,12 @@ export const Section = ({
                   }}
                 >
                   <h6>Questions</h6>
-                  <Typography variant="caption">3</Typography>
+                  <Typography variant="caption">
+                    {
+                      skills?.find((skill) => skill.id === view)?.questions
+                        .length
+                    }
+                  </Typography>
                 </div>
                 <div
                   style={{
@@ -229,7 +245,10 @@ export const Section = ({
               </Typography>
               {showStartButton && (
                 <Button
-                  onClick={() => onStartTest(view)}
+                  onClick={() => {
+                    setStatusInProgress()
+                    onStartTest(view)
+                  }}
                   variant="outlined"
                   color="secondary"
                   style={{ width: '100%', marginTop: 20 }}

@@ -11,14 +11,13 @@ import { Typography, Divider, Backdrop, CircularProgress } from '@mui/material'
 import { TestSection } from '../user/TestSection'
 import { TestScreen } from '../user/TestScreen'
 
-export const TestInstructions = ({ onEndSection }) => {
+export const TestInstructions = ({ onEndSection, testIdFromURL }) => {
   const [showSections, setShowSections] = React.useState(false)
 
   const { loading, data } = useQuery(GET_TEST, {
-    variables: {},
+    variables: { testId: testIdFromURL },
   })
 
-  console.log('Data', data)
   const info = React.useMemo(() => {
     return {
       testName: data?.getAllTests[0]?.name,
